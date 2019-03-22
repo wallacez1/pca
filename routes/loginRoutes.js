@@ -3,6 +3,6 @@ const router = express.Router();
 
 const loginCtrl = require("../controllers/login")
 
-router.post('/registrar',loginCtrl.CriarUsuario);
+router.post('/registrar',loginCtrl.criarUsuario);
 
 module.exports = router;

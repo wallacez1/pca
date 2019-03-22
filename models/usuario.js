@@ -2,7 +2,9 @@ const mongoose = require('mongoose')
 
 const usuarioSchema = mongoose.Schema({
     nome: {type:String},
+    idade: {type:Number},
     username: {type: String},
+    sexo: {type: String, enum: ["M","F"]}, 
     email: {type:String},
     senha: {type:String},
     telefone: {type:String},
