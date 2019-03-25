@@ -10,4 +10,4 @@ Requerimentos: Ter node.js instalado
 
 3 - executar o comando npm install, para baixar as dependências
 
-4 - npm start para executar
+4 - npm start para executar teste
