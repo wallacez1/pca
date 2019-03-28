@@ -12,7 +12,14 @@ app.use(express.urlencoded({extended:true, limit: '50mb'}));
 //Conexão com o banco
 mongoose.Promise = global.Promise;
 mongoose.connect(dbConfig.dbStringConexao, {useNewUrlParser:true})
-console.log(dbConfig.dbStringConexao);
+mongoose.connection.on('error', (err) => {		
+    console.log('db.error'
+    );
+});
+mongoose.connection.on('connected', () => {
+    console.log('db.ready');
+});
+
 
 //Middleware com as rotas
 const login = require('./routes/loginRoutes')

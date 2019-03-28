@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
 const usuarioSchema = mongoose.Schema({
-    nome: {type:String},
+    nome: {type:String,lowercase:true},
     idade: {type:Number},
-    username: {type: String},
-    sexo: {type: String, enum: ["M","F"]}, 
-    email: {type:String},
-    senha: {type:String},
-    telefone: {type:String},
-    dataCadastro: {type: Date, default: DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss.fff")}
-});
+    usuario: {type: String},
+    sexo: {type: String, lowercase:true, enum: ["M","F"]}, 
+    email: {type:String, lowercase:true},
+    senha: {type:String,},
+    telefone: {type:Number},
+    dataCadastro: {type: Date, default: Date.now()}
+})
 
 module.exports =  mongoose.model('usuario',usuarioSchema)
