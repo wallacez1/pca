@@ -1,55 +1,28 @@
-const Joi =  require("joi")
 const HttpStatus = require("http-status-codes")
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcryptjs')
 module.exports = {
-    async criarUsuario(req,res){
-        const schema = Joi.object().keys({
-            nome: Joi.string(),
-            idade: Joi.number(),
-            usuario:Joi.string().required(),
-            sexo:Joi.string(),
-            email:Joi.string().email().required(),
-            senha:Joi.string().min(5).required(),
-            telefone:Joi.number()
-        })
+    async login(req,res){
+        console.log(req.body.usuario)
+        console.log(req.body.senha)
+      if(!req.body.usuario || !req.body.senha){
+          return res.status(HttpStatus.NOT_FOUND).json({error: "Campos em branco não são permitidos"})
+      }
 
-        const {error, value} = Joi.validate(req.body, schema);
-        if(error && error.details){
-            return res.status(HttpStatus.BAD_REQUEST).json({error: error.details})
-        }
+      await Usuario.findOne({usuario:req.body.usuario.toLowerCase()}).then(usuario =>{
+          if(!usuario){
+            return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({error: "usuário não encontrado"})
+          }
 
-        // Verificar se o email ja existe
+          return bcrypt.compare(req.body.senha, usuario.senha).then((resultado)=>{
+              if(!resultado){
+                return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({error: "senha incorreta"})
+              }
 
-        const emailUsuario = await Usuario.findOne({email: req.body.email.toLowerCase()});
-
-        if(emailUsuario){
-            return res.status(HttpStatus.CONFLICT).json({message: "Email já existe"})
-        }
-        
-        // Verificar se o usuario ja existe ja existe
-        const user = await Usuario.findOne({usuario: req.body.usuario.toLowerCase()})
-
-        if(user){
-            return res.status(HttpStatus.CONFLICT).json({error: "Usuário já existente"})
-        }
-
-        //Criando hash da senha
-        return bcrypt.hash(req.body.senha, 10, (err,hash)=>{
-            if(err){
-                return res.status(HttpStatus.CONFLICT).json({message: "Erro ao salvar"})
-            }
-            //Criando Elemento para salvar
-            const body = {
-                usuario: req.body.usuario.toLowerCase(),
-                email: req.body.email.toLowerCase(),
-                senha: hash
-            }
-            console.log(body)
-            // Salvando no banco
-            Usuario.create(body).then(user =>{
-                res.status(HttpStatus.CREATED).json({message:"Usuário criado com sucesso"})
-            }).catch(err => res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message:err}))
-        })
+              return res.status(HttpStatus.OK).json({message: "ok"})
+          })
+      }).catch(err => {
+        return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({error: err})
+      })
     }
 }
