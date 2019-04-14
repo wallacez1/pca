@@ -53,11 +53,12 @@ module.exports = {
                 console.log(dbConfig.secret)
                 res.status(HttpStatus.CREATED).json({message: "Usuário criado com sucesso",user,token})
             })
+            res.cookie('auth',token)
             .catch(err => {
                 console.log(err)
                 res
                   .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                  .json({ message: 'Error occured' });
+                  .json({ message: 'Error ao salvar' });
               });
         })
     }
