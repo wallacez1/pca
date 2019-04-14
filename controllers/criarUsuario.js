@@ -2,6 +2,8 @@ const Joi =  require("joi")
 const HttpStatus = require("http-status-codes")
 const Usuario = require('../models/usuario')
 const bcrypt = require('bcryptjs')
+const jwt = require("jsonwebtoken");
+const dbConfig = require('../config/config')
 module.exports = {
     async criarUsuario(req,res){
         const schema = Joi.object().keys({
@@ -37,7 +39,7 @@ module.exports = {
         //Criando hash da senha
         return bcrypt.hash(req.body.senha, 10, (err,hash)=>{
             if(err){
-                return res.status(HttpStatus.CONFLICT).json({message: "Erro ao salvar"})
+                return res.status(HttpStatus.CONFLICT).json({message: "error ao encriptar a senha"})
             }
             //Criando Elemento para salvar
             const body = {
@@ -47,8 +49,16 @@ module.exports = {
             }
             // Salvando no banco
             Usuario.create(body).then(user =>{
-                res.status(HttpStatus.CREATED).json({message:"Usuário criado com sucesso"})
-            }).catch(err => res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message:err}))
+                const token = jwt.sign({data:user}, dbConfig.secret)
+                console.log(dbConfig.secret)
+                res.status(HttpStatus.CREATED).json({message: "Usuário criado com sucesso",user,token})
+            })
+            .catch(err => {
+                console.log(err)
+                res
+                  .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                  .json({ message: 'Error occured' });
+              });
         })
     }
 }

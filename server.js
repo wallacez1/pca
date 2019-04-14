@@ -1,11 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
 require('dotenv').config()
 
 const app = express();
 
 app.use(cors());
+app.use(cookieParser());
+app.use(logger('dev'));
 
 const dbConfig = require('./config/config')
 

@@ -3,8 +3,7 @@ const Usuario = require('../models/usuario')
 const bcrypt = require('bcryptjs')
 module.exports = {
     async login(req,res){
-        console.log(req.body.usuario)
-        console.log(req.body.senha)
+        
       if(!req.body.usuario || !req.body.senha){
           return res.status(HttpStatus.NOT_FOUND).json({error: "Campos em branco não são permitidos"})
       }
