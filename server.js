@@ -38,8 +38,11 @@ mongoose.connection.on('connected', () => {
 
 //Middleware com as rotas
 const login = require('./routes/loginRoutes')
+const posts = require('./routes/postRoutes')
 
 app.use('/api',login)
+app.use('/api',posts)
+
 
 app.listen(3000, () =>{
     console.log('running on port 3000')
