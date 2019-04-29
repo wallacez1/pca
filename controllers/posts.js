@@ -1,5 +1,7 @@
 module.exports = {
     AddPost(req,res){
-        console.log("Bateu aqui")
+        const img = req.file
+        console.log('string' + req.body.teste);
+        console.log(img);
     }
 }
