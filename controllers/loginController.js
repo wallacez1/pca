@@ -8,6 +8,7 @@ const router = express.Router();
 // Chamada do verificador do Token
 router.use(authMiddleware);
 
+
 // Enviando Requisição
 router.get('/me', async(req, res) => {
   // res.send({ ok:false, user: req.userId })

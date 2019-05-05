@@ -77,6 +77,7 @@ router.post('/update', async (req, res) => {
 
 // Atenticando usuario no sistema
 
+
 router.post('/authenticate', async (req, res) => {
     const { email } = req.body;
 
