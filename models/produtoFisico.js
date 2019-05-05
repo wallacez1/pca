@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const Base = require('./base')
 
-const servicoSchema = mongoose.Schema({
+
+const prodFisicoSchema = mongoose.Schema({
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuario',
@@ -40,6 +41,10 @@ const servicoSchema = mongoose.Schema({
         type: String,
         required: true
     },
+    estabelecimentoProduto: {
+        type: String,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('servicoSchema', servicoSchema)
+module.exports = mongoose.model('produtoFisico', prodFisicoSchema)

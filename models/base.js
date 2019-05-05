@@ -1,11 +1,14 @@
 const mongoose = require('mongoose')
-const Base = require('./base')
+const options = {
+    discriminatorKey: 'tipoProduto'
+}
 
-const servicoSchema = mongoose.Schema({
+const baseSchema = mongoose.Schema({
+
     usuario: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'usuario',
-        default: "507f1f77bcf86cd799439011",
+        default: "Anônimo",
         required: true
     },
     nomeProduto: {
@@ -35,11 +38,10 @@ const servicoSchema = mongoose.Schema({
     totalDeslikes: {
         type: Number,
         default: 0
-    },
-    imagePath: {
-        type: String,
-        required: true
-    },
-});
+    }
 
-module.exports = mongoose.model('servicoSchema', servicoSchema)
+}, options);
+
+
+
+module.exports = mongoose.model('Base', baseSchema)
