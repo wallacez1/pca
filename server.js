@@ -25,8 +25,11 @@ app.use(express.json({limit: '50mb'}))
 app.use(express.urlencoded({extended:true, limit: '50mb'}));
 
 //Conexão com o banco
+// mongoose.Promise = global.Promise;
+// mongoose.connect(dbConfig.dbStringConexao, {useNewUrlParser:true})
+mongoose.connect('mongodb://localhost/noderest', { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.dbStringConexao, {useNewUrlParser:true})
+
 mongoose.connection.on('error', (err) => {		
     console.log('db.error'
     );
@@ -37,11 +40,13 @@ mongoose.connection.on('connected', () => {
 
 
 //Middleware com as rotas
-const login = require('./routes/loginRoutes')
-const posts = require('./routes/postRoutes')
+require('./controllers/authcontroller')(app);
+require('./controllers/logincontroller')(app);
+// const login = require('./routes/loginRoutes')
+// const posts = require('./routes/postRoutes')
 
-app.use('/api',login)
-app.use('/api',posts)
+// app.use('/api',login)
+// app.use('/api',posts)
 
 
 app.listen(3000, () =>{
