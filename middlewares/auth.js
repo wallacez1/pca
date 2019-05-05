@@ -5,6 +5,7 @@ const User = require('../models/User');
 
 // Verifição se o Token e valido ou não
 
+
 module.exports = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
