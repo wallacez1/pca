@@ -40,8 +40,8 @@ mongoose.connection.on('connected', () => {
 
 
 //Middleware com as rotas
-require('./controllers/authcontroller')(app);
-require('./controllers/logincontroller')(app);
+require('./controllers/authController')(app);
+require('./controllers/loginController')(app);
 // const login = require('./routes/loginRoutes')
 // const posts = require('./routes/postRoutes')
 
