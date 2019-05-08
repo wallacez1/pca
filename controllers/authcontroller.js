@@ -15,7 +15,7 @@ const router = express.Router();
 // Gerador Token
 function generateToken(params = {}) {
     return jwt.sign(params, authConfig.secret, {
-        expiresIn: 600,
+        expiresIn: 3600,
     });
 }
 
@@ -40,6 +40,7 @@ router.post('/login', async (req, res) => {
             });
         }
     }catch (err) {
+        console.error(err)
         return res.status(400).send({ error: 'Registration failed' });
     }
 });
@@ -70,6 +71,7 @@ router.post('/update', async (req, res) => {
         res.send();
         
     } catch (err) {
+        console.error(err)
         res.status(400).send({ error: 'Update not Performed' })
     }
 
