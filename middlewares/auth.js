@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const authConfig = require('../config/config');
-const User = require('../models/User');
+const usuario = require('../models/user');
 
 
 // Verifição se o Token e valido ou não
@@ -25,7 +25,7 @@ module.exports = (req, res, next) => {
     jwt.verify(token, authConfig.secret, (err, decoded) => {
         if (err) return res.status(401).send({ error: 'Token invalido'});
 
-        req.userId = decoded.email;
+        req.userEmail = decoded.email;
         return next();
 
     });

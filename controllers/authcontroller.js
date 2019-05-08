@@ -1,12 +1,12 @@
 const express = require('express');
 
-const User = require('../models/User');
+const usuario = require('../models/user');
 
 const jwt = require('jsonwebtoken');
 
 const authConfig = require('../config/config');
 
-const authMiddleware = require('../middlewares/auth');
+const authmiddleware = require('../middlewares/auth');
 
 
 const router = express.Router();
@@ -25,7 +25,7 @@ router.post('/login', async (req, res) => {
 
     // Verificar se o email ja existe
     const { email } = req.body;
-    if(await User.findOne({ email })){
+    if(await usuario.findOne({ email })){
         console.log("entrou");
         return res.send({ 
             token: generateToken({ email: email }), 
@@ -33,7 +33,7 @@ router.post('/login', async (req, res) => {
     } else {
         console.log("entrou")
         // Inserir o Usuario e Retorna Token passando como parametro o ID
-        const user = await User.create(req.body);
+        const user = await usuario.create(req.body);
             return res.send({ 
                 token: generateToken({ email: user.email }), 
         
@@ -45,7 +45,7 @@ router.post('/login', async (req, res) => {
 });
 
 // Chamada do verificador do Token
-router.use(authMiddleware);
+router.use(authmiddleware);
 
 // Atualizando usuario no sitema
 router.post('/update', async (req, res) => {
@@ -56,10 +56,10 @@ router.post('/update', async (req, res) => {
 
         const email  = req.userId;
 
-        const user = await User.findOne({ email });
+        const user = await usuario.findOne({ email });
 
         if(!user)
-        return res.status(400).send({ error: 'Usuario nao found' });
+        return res.status(400).send({ error: 'User not found' });
 
         user.is_first_login = is_first_login;
         user.gender = gender;
@@ -70,7 +70,7 @@ router.post('/update', async (req, res) => {
         res.send();
         
     } catch (err) {
-        res.status(400).send({ error: "Não Foi" })
+        res.status(400).send({ error: 'Update not Performed' })
     }
 
 });
@@ -81,11 +81,11 @@ router.post('/update', async (req, res) => {
 router.post('/authenticate', async (req, res) => {
     const { email } = req.body;
 
-    const user = await User.findOne({ email });
+    const user = await usuario.findOne({ email });
 
-    if(!user)
-    return res.status(400).send({ error: 'Usuario nao found' });
-
+    if(!user){
+        return res.status(400).send({ error: 'Usuario not found' });
+    }
 
     res.send({ 
         user,

@@ -1,25 +1,25 @@
 const express = require('express');
-const authMiddleware = require('../middlewares/auth');
-const User = require('../models/User');
+const authmiddleware = require('../middlewares/auth');
+const usuario = require('../models/user');
 
 
 const router = express.Router();
 
 // Chamada do verificador do Token
-router.use(authMiddleware);
+router.use(authmiddleware);
 
 
 // Enviando Requisição
 router.get('/me', async(req, res) => {
   // res.send({ ok:false, user: req.userId })
     
-    const email  = req.userId;
+    const email  = req.userEmail;
     
-    const user = await User.findOne({ email });
+    const user = await usuario.findOne({ email });
     
-    if(!user)
-    return res.status(400).send({ error: 'Usuario nao found' });
-
+    if(!user){
+      return res.status(400).send({ error: 'Usuario not found' });
+    }
 
     res.send({ 
         user,

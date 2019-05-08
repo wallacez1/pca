@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: {
         type: String,
         lowercase: true,
@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     gender: {
         type: String, 
         uppercase:true, 
-        enum: ["M","F"]
+        enum: ["M","F","O"]
     },
     birthday: {
         type: String,
@@ -28,7 +28,7 @@ const UserSchema = new mongoose.Schema({
         default: Date.now()
     },
     is_first_login: {
-        type: String,
+        type: Boolean,
         lowercase: true,
         default: true
     },
@@ -36,10 +36,12 @@ const UserSchema = new mongoose.Schema({
 
     },
     deleted: {
-
+        type: Boolean,
+        default: false
     }
 
 });
 
-module.exports =  mongoose.model('User', UserSchema);
+const collection = 'user';
+module.exports =  mongoose.model(collection, userSchema);
 
