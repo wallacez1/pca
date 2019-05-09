@@ -3,10 +3,9 @@ const Base = require('./base')
 
 
 const prodFisicoSchema = mongoose.Schema({
-    usuario: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuario',
-        default: "507f1f77bcf86cd799439011",
+    emailUsuario: {
+        type: String,
+        default: "",
         required: true
     },
     nomeProduto: {
@@ -41,10 +40,10 @@ const prodFisicoSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    estabelecimentoProduto: {
+    nomeEstabelecimento: {
         type: String,
         required: true
     }
 });
 
-module.exports = mongoose.model('produtoFisico', prodFisicoSchema)
+module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')

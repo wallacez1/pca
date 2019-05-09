@@ -2,13 +2,12 @@ const mongoose = require('mongoose')
 const Base = require('./base')
 
 const servicoSchema = mongoose.Schema({
-    usuario: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuario',
-        default: "507f1f77bcf86cd799439011",
+    emailUsuario: {
+        type: String,
+        default: "",
         required: true
     },
-    nomeProduto: {
+    nomeServico: {
         type: String,
         default: "",
         required: true
@@ -18,7 +17,7 @@ const servicoSchema = mongoose.Schema({
         default: "",
         required: true
     },
-    valorProduto: {
+    valorServico: {
         type: Number,
         default: 0,
         required: true
@@ -36,10 +35,14 @@ const servicoSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    imagePath: {
+    nomeEstabelecimento: {
         type: String,
-        required: true
+        default: 0
+    },
+    Descricao: {
+        type: String,
+        default: 0
     },
 });
 
-module.exports = mongoose.model('servicoSchema', servicoSchema)
+module.exports = mongoose.model('servico', servicoSchema, 'produtos')

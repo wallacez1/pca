@@ -2,13 +2,7 @@ const mongoose = require('mongoose')
 
 
 const produtoOnlineSchema = mongoose.Schema({
-    id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'usuario',
-        default: "507f1f77bcf86cd799439011",
-        required: true
-    },
-    email: {
+    emailUsuario: {
         type: String,
         ref: 'usuario',
         default: "wallace.silva@unigranrio.br",
@@ -38,7 +32,7 @@ const produtoOnlineSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    totalunlikes: {
+    totalDeslikes: {
         type: Number,
         default: 0
     },
@@ -48,4 +42,4 @@ const produtoOnlineSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('produtoOnline', produtoOnlineSchema)
+module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')
