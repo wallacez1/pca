@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 
+
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
@@ -18,7 +19,18 @@ const produtoOnlineSchema = mongoose.Schema({
         default: "",
         required: true
     },
+
+    isOnline: {
+        type: Boolean,
+        default: true,
+        required: true
+    },
     valorProduto: {
+        type: Number,
+        default: 0,
+        required: true
+    },
+    categoria: {
         type: Number,
         default: 0,
         required: true

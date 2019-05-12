@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const Base = require('./base')
+const locationSchema = require('./location')
 
 const servicoSchema = mongoose.Schema({
     emailUsuario: {
@@ -12,6 +12,9 @@ const servicoSchema = mongoose.Schema({
         default: "",
         required: true
     },
+
+    loc: locationSchema,
+
     tipoProduto: {
         type: String,
         default: "",

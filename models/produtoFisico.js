@@ -1,16 +1,22 @@
 const mongoose = require('mongoose')
-const Base = require('./base')
+const locationSchema = require('./location')
 
 
 const prodFisicoSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
-        default: "",
+        default: "wallacez1@hotmail.com",
         required: true
     },
     nomeProduto: {
         type: String,
         default: "",
+        required: true
+    },
+    loc: locationSchema,
+    isOnline: {
+        type: Boolean,
+        default: false,
         required: true
     },
     tipoProduto: {

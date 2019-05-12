@@ -1,46 +1,48 @@
 const Joi = require('joi')
 const ProdutoOnlineModel = require('../models/produtoOnline')
 const ProdutoFisicoModel = require('../models/produtoFisico')
+const ProdutoFisicoJoiSchema = require('../helpers/produtoFisicoJoiSchema')
 const ServicoModel = require('../models/servico')
 
 module.exports = {
     AddPost(req, res) {
         const tipo = req.query.tipo
-
-
         if (tipo === 'pf') {
 
-            const data = req.body;
+            const data = req.body
+            console.log()
 
-            const schemaProdutoFisico = Joi.object().keys({
-
-                emailUsuario: Joi.string().email().required(),
-                valorProduto: Joi.number().required(),
-                nomeProduto: Joi.string().required(),
-                tipoProduto: Joi.string().required(),
-                imagePath: Joi.string().required(),
-                nomeEstabelecimento: Joi.string().required()
-            });
-
-            Joi.validate(data, schemaProdutoFisico, (err, value) => {
+            Joi.validate(data, ProdutoFisicoJoiSchema, (err, value) => {
                 if (err) {
 
                     res.status(422).json({
                         status: 'error',
-                        message: 'Invalid request data',
-                        data: data
+                        message: 'erro ao salvar produto',
+                        data: err
                     });
                 } else {
-                    const body = {
-                        emailUsuario: req.body.emailUsuario,
-                        valorProduto: req.body.valorProduto,
-                        nomeProduto: req.body.nomeProduto,
-                        tipoProduto: req.body.tipoProduto,
-                        imagePath: req.body.imagePath,
-                        nomeEstabelecimento: req.body.nomeEstabelecimento,
+
+
+                    var produto = {
+                        nomeProduto: req.body.payload.name,
+                        tipoProduto: req.body.payload.category,
+                        valorProduto: req.body.payload.value,
+                        nomeEstabelecimento: req.body.payload.place,
+                        imagePath: req.body.payload.imagePath,
+                        loc: {
+                            endereco: {
+                                rua: req.body.location.street,
+                                numero: req.body.location.house_number,
+                                estado: req.body.location.state,
+                                pais: req.body.location.country,
+                            },
+                            geo: {
+                                coordinates: [req.body.location.lat, req.body.location.long]
+                            }
+                        }
                     }
 
-                    ProdutoFisicoModel.create(body).then(user => {
+                    ProdutoFisicoModel.create(produto).then(user => {
                         res.status(200).json({
                             message: "Cadastro com sucesso",
                         })
@@ -62,13 +64,13 @@ module.exports = {
 
             const schemaProdutoOnline = Joi.object().keys({
 
-                emailUsuario: Joi.string().required(),
-                valorProduto: Joi.number().required(),
-                nomeProduto: Joi.string().required(),
-                tipoProduto: Joi.string().required(),
-                url: Joi.string().required()
-
-
+                payload: {
+                    value: Joi.number().required(),
+                    name: Joi.string().required(),
+                    category: Joi.string().required(),
+                    place: Joi.string().required(),
+                    url: Joi.string().required()
+                }
             });
 
 
@@ -77,7 +79,7 @@ module.exports = {
 
                     res.status(422).json({
                         status: 'error',
-                        message: 'Produto inserido com sucesso',
+                        message: 'erro ao inserir o produto',
                         data: data
                     });
                 } else {
@@ -85,9 +87,9 @@ module.exports = {
 
                     const body = {
                         emailUsuario: req.body.emailUsuario,
-                        valorProduto: req.body.valorProduto,
-                        nomeProduto: req.body.nomeProduto,
-                        tipoProduto: req.body.tipoProduto,
+                        valorProduto: req.body.value,
+                        nomeProduto: req.body.name,
+                        tipoProduto: req.body.category,
                         url: req.body.url,
                     }
 
@@ -116,14 +118,22 @@ module.exports = {
             const data = req.body;
 
             const schemaServico = Joi.object().keys({
-
-                emailUsuario: Joi.string().required(),
-                valorServico: Joi.number().required(),
-                nomeServico: Joi.string().required(),
-                tipoProduto: Joi.string().required(),
-                nomeEstabelecimento: Joi.string().required(),
-                descricao: Joi.string().required()
-
+                payload: {
+                    value: Joi.number().required(),
+                    name: Joi.string().required(),
+                    category: Joi.string().required(),
+                    place: Joi.string().required(),
+                    description: Joi.string().required()
+                },
+                location: {
+                    street: Joi.number().required(),
+                    house_number: Joi.number().required(),
+                    city: Joi.number().required(),
+                    state: Joi.number().required(),
+                    short_state: Joi.number().required(),
+                    country: Joi.number().required(),
+                    short_country: Joi.number().required(),
+                }
 
             });
 
@@ -138,11 +148,11 @@ module.exports = {
                 } else {
                     const body = {
                         emailUsuario: req.body.email,
-                        valorServico: req.body.valorServico,
-                        nomeServico: req.body.nomeServico,
-                        tipoProduto: req.body.tipoProduto,
-                        nomeEstabelecimento: req.body.nomeEstabelecimento,
-                        descricao: req.body.descricao,
+                        valorServico: req.body.value,
+                        nomeServico: req.body.name,
+                        tipoProduto: req.body.category,
+                        nomeEstabelecimento: req.body.place,
+                        descricao: req.body.description,
                     }
 
 
@@ -155,9 +165,6 @@ module.exports = {
                             message: "Erro ao cadastrar",
                         })
                     })
-
-
-
                 }
 
             });
