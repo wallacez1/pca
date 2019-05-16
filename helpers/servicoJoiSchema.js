@@ -7,8 +7,7 @@ module.exports = Joi.object().keys({
         name: Joi.string().required().label("erro no nome"),
         category: Joi.string().required().label("erro na categoria"),
         place: Joi.string().required().label("erro no lugar"),
-        imagePath: Joi.string().required().label("erro no image.path")
-
+        description: Joi.string().required().label("erro na descricao")
     },
     location: {
         street: Joi.string().required().label("erro na rua"),

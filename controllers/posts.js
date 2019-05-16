@@ -1,8 +1,11 @@
 const Joi = require('joi')
 const ProdutoOnlineModel = require('../models/produtoOnline')
 const ProdutoFisicoModel = require('../models/produtoFisico')
-const ProdutoFisicoJoiSchema = require('../helpers/produtoFisicoJoiSchema')
 const ServicoModel = require('../models/servico')
+const ProdutoFisicoJoiSchema = require('../helpers/produtoFisicoJoiSchema')
+const ProdutoOnlineJoiSchema = require('../helpers/produtoOnlineJoiSchema')
+const ServicoJoiSchema = require('../helpers/servicoJoiSchema')
+
 
 module.exports = {
     AddPost(req, res) {
@@ -18,14 +21,14 @@ module.exports = {
                     res.status(422).json({
                         status: 'error',
                         message: 'erro ao salvar produto',
-                        data: err
+                        data: data + err
                     });
                 } else {
 
 
-                    var produto = {
+                    var produtoFisico = {
                         nomeProduto: req.body.payload.name,
-                        tipoProduto: req.body.payload.category,
+                        categoria: req.body.payload.category,
                         valorProduto: req.body.payload.value,
                         nomeEstabelecimento: req.body.payload.place,
                         imagePath: req.body.payload.imagePath,
@@ -35,6 +38,7 @@ module.exports = {
                                 numero: req.body.location.house_number,
                                 estado: req.body.location.state,
                                 pais: req.body.location.country,
+                                cidade: req.body.location.city
                             },
                             geo: {
                                 coordinates: [req.body.location.lat, req.body.location.long]
@@ -42,9 +46,13 @@ module.exports = {
                         }
                     }
 
-                    ProdutoFisicoModel.create(produto).then(user => {
+                    ProdutoFisicoModel.create(produtoFisico).then(user => {
                         res.status(200).json({
                             message: "Cadastro com sucesso",
+                        }).catch(erro => {
+                            res.status(500).json({
+                                message: "Erro ao cadastrar: " + erro,
+                            })
                         })
                     })
                 }
@@ -62,44 +70,35 @@ module.exports = {
             const data = req.body;
 
 
-            const schemaProdutoOnline = Joi.object().keys({
-
-                payload: {
-                    value: Joi.number().required(),
-                    name: Joi.string().required(),
-                    category: Joi.string().required(),
-                    place: Joi.string().required(),
-                    url: Joi.string().required()
-                }
-            });
 
 
-            Joi.validate(data, schemaProdutoOnline, (err, value) => {
+            Joi.validate(data, ProdutoOnlineJoiSchema, (err, value) => {
                 if (err) {
 
                     res.status(422).json({
                         status: 'error',
                         message: 'erro ao inserir o produto',
-                        data: data
+                        data: data + err
                     });
                 } else {
 
+                    var produtoOnline = {
+                        nomeProduto: req.body.payload.name,
+                        categoria: req.body.payload.category,
+                        valorProduto: req.body.payload.value,
+                        nomeEstabelecimento: req.body.payload.place,
+                        url: req.body.payload.url,
 
-                    const body = {
-                        emailUsuario: req.body.emailUsuario,
-                        valorProduto: req.body.value,
-                        nomeProduto: req.body.name,
-                        tipoProduto: req.body.category,
-                        url: req.body.url,
                     }
 
-                    ProdutoOnlineModel.create(body).then(post => {
+
+                    ProdutoOnlineModel.create(produtoOnline).then(post => {
                         res.status(200).json({
                             message: "Cadastro com sucesso",
                         })
                     }).catch(erro => {
                         res.status(500).json({
-                            message: "Erro ao cadastrar",
+                            message: "Erro ao cadastrar: " + erro,
                         })
                     })
 
@@ -117,52 +116,44 @@ module.exports = {
 
             const data = req.body;
 
-            const schemaServico = Joi.object().keys({
-                payload: {
-                    value: Joi.number().required(),
-                    name: Joi.string().required(),
-                    category: Joi.string().required(),
-                    place: Joi.string().required(),
-                    description: Joi.string().required()
-                },
-                location: {
-                    street: Joi.number().required(),
-                    house_number: Joi.number().required(),
-                    city: Joi.number().required(),
-                    state: Joi.number().required(),
-                    short_state: Joi.number().required(),
-                    country: Joi.number().required(),
-                    short_country: Joi.number().required(),
-                }
+            console.log("bateu aqui no se")
 
-            });
-
-            Joi.validate(data, schemaServico, (err, value) => {
+            Joi.validate(data, ServicoJoiSchema, (err, value) => {
                 if (err) {
 
                     res.status(422).json({
                         status: 'error',
                         message: 'Invalid request data',
-                        data: data
+                        data: data + err
                     });
                 } else {
-                    const body = {
-                        emailUsuario: req.body.email,
-                        valorServico: req.body.value,
-                        nomeServico: req.body.name,
-                        tipoProduto: req.body.category,
-                        nomeEstabelecimento: req.body.place,
-                        descricao: req.body.description,
+                    var servico = {
+                        nomeServico: req.body.payload.name,
+                        categoria: req.body.payload.category,
+                        valorProduto: req.body.payload.value,
+                        nomeEstabelecimento: req.body.payload.place,
+                        descricao: req.body.payload.description,
+                        loc: {
+                            endereco: {
+                                rua: req.body.location.street,
+                                numero: req.body.location.house_number,
+                                estado: req.body.location.state,
+                                pais: req.body.location.country,
+                                cidade: req.body.location.city
+                            },
+                            geo: {
+                                coordinates: [req.body.location.lat, req.body.location.long]
+                            }
+                        }
                     }
 
-
-                    ServicoModel.create(body).then(post => {
+                    ServicoModel.create(servico).then(post => {
                         res.status(200).json({
                             message: "Cadastro com sucesso",
                         })
                     }).catch(erro => {
                         res.status(500).json({
-                            message: "Erro ao cadastrar",
+                            message: "Erro ao cadastrar: " + erro,
                         })
                     })
                 }

@@ -13,13 +13,18 @@ const prodFisicoSchema = mongoose.Schema({
         default: "",
         required: true
     },
-    loc: locationSchema,
+
     isOnline: {
         type: Boolean,
         default: false,
         required: true
     },
     tipoProduto: {
+        type: String,
+        default: "pf",
+        required: true
+    },
+    categoria: {
         type: String,
         default: "",
         required: true
@@ -49,7 +54,8 @@ const prodFisicoSchema = mongoose.Schema({
     nomeEstabelecimento: {
         type: String,
         required: true
-    }
+    },
+    loc: locationSchema,
 });
 
 module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')

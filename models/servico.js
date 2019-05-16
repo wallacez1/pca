@@ -4,7 +4,7 @@ const locationSchema = require('./location')
 const servicoSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
-        default: "",
+        default: "wallace_z1@hotmail.com",
         required: true
     },
     nomeServico: {
@@ -17,7 +17,7 @@ const servicoSchema = mongoose.Schema({
 
     tipoProduto: {
         type: String,
-        default: "",
+        default: "se",
         required: true
     },
     valorServico: {

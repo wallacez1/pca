@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 
 
+
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
@@ -16,21 +17,20 @@ const produtoOnlineSchema = mongoose.Schema({
     },
     tipoProduto: {
         type: String,
+        default: "po",
+        required: true
+    },
+    categoria: {
+        type: String,
         default: "",
         required: true
     },
-
     isOnline: {
         type: Boolean,
         default: true,
         required: true
     },
     valorProduto: {
-        type: Number,
-        default: 0,
-        required: true
-    },
-    categoria: {
         type: Number,
         default: 0,
         required: true
@@ -51,7 +51,8 @@ const produtoOnlineSchema = mongoose.Schema({
     url: {
         type: String,
         required: true
-    }
+    },
+
 });
 
 module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')
