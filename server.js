@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const PORT = process.env.PORT || 3000;
 
 require('dotenv').config()
 
@@ -50,6 +51,6 @@ require('./controllers/loginController')(app);
 // app.use('/api',posts)
 
 
-app.listen(3000, () =>{
-    console.log('running on port 3000')
+app.listen(PORT, () =>{
+    console.log('running on port ' + PORT)
 })
