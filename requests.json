@@ -1,0 +1,52 @@
+/*produto fisico*/
+
+{
+    "payload": {
+        "value": 1000,
+        "name": "teste",
+        "category": "teste inserção",
+        "place": "establecimento teste",
+        "imagePath": "teste para insercao de servico"
+    },
+    "location": {
+        "street": "rua teste",
+        "house_number": 500,
+        "city": "Caxias",
+        "state": "Rio de Janeiro",
+        "country": "brasil",
+        "lat": 40.712776,
+        "long": -74.44556
+    }
+}
+
+
+/*produto online*/
+{
+    "payload": {
+        "value": 1000,
+        "name": "teste",
+        "category": "teste inserção",
+        "place": "teste lugar",
+        "url": "teste para insercao de servico"
+    }
+}
+
+/*servico*/
+{
+    "payload": {
+        "value": 1000,
+        "name": "teste",
+        "category": "teste inserção",
+        "place": "establecimento teste",
+        "description": "teste para insercao de servico"
+    },
+    "location": {
+        "street": "rua teste",
+        "house_number": 500,
+        "city": "Caxias",
+        "state": "Rio de Janeiro",
+        "country": "brasil",
+        "lat": 40.712776,
+        "long": -74.44556
+    }
+}

@@ -1,26 +1,36 @@
 const mongoose = require('mongoose')
-const locationSchema = require('./location')
 
-const servicoSchema = mongoose.Schema({
+
+
+
+const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
-        default: "wallace_z1@hotmail.com",
+        ref: 'usuario',
+        default: "wallace.silva@unigranrio.br",
         required: true
     },
-    nomeServico: {
+    nomeProduto: {
         type: String,
         default: "",
         required: true
     },
-
-    loc: locationSchema,
-
     tipoProduto: {
         type: String,
-        default: "se",
+        default: "po",
         required: true
     },
-    valorServico: {
+    categoria: {
+        type: String,
+        default: "",
+        required: true
+    },
+    isOnline: {
+        type: Boolean,
+        default: true,
+        required: true
+    },
+    valorProduto: {
         type: Number,
         default: 0,
         required: true
@@ -38,14 +48,11 @@ const servicoSchema = mongoose.Schema({
         type: Number,
         default: 0
     },
-    nomeEstabelecimento: {
+    url: {
         type: String,
-        default: 0
+        required: true
     },
-    Descricao: {
-        type: String,
-        default: 0
-    },
+
 });
 
-module.exports = mongoose.model('servico', servicoSchema, 'produtos')
+module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')
