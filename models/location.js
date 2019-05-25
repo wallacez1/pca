@@ -4,19 +4,24 @@ const locationSchema = mongoose.Schema({
 
     endereco: {
         rua: {
-            type: String
+            type: String,
+            lowercase: true
         },
         numero: {
             type: String,
+            lowercase: true
         },
         cidade: {
             type: String,
+            lowercase: true
         },
         estado: {
             type: String,
+            lowercase: true
         },
         pais: {
             type: String,
+            lowercase: true
         }
     },
     geo: {

@@ -4,13 +4,15 @@ const locationSchema = require('./location')
 const servicoSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
-        default: "wallace_z1@hotmail.com",
-        required: true
+        default: "",
+        required: true,
+        lowercase: true
     },
     nomeServico: {
         type: String,
         default: "",
-        required: true
+        required: true,
+        lowercase: true
     },
 
     loc: locationSchema,
@@ -18,17 +20,20 @@ const servicoSchema = mongoose.Schema({
     tipoProduto: {
         type: String,
         default: "se",
-        required: true
+        required: true,
+        lowercase: true
     },
     valorServico: {
         type: Number,
         default: 0,
-        required: true
+        required: true,
+
     },
     dataCadastro: {
         type: Date,
         default: Date.now(),
-        required: true
+        required: true,
+
     },
     totalLikes: {
         type: Number,
@@ -44,7 +49,8 @@ const servicoSchema = mongoose.Schema({
     },
     Descricao: {
         type: String,
-        default: 0
+        default: "",
+        lowercase: true
     },
 });
 

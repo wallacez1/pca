@@ -7,23 +7,28 @@ const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
         ref: 'usuario',
-        default: "wallace.silva@unigranrio.br",
-        required: true
+        default: "",
+        required: true,
+        lowercase: true
     },
     nomeProduto: {
         type: String,
         default: "",
-        required: true
+        required: true,
+        lowercase: true
     },
     tipoProduto: {
         type: String,
         default: "po",
-        required: true
+        required: true,
+        lowercase: true
     },
     categoria: {
         type: String,
         default: "",
-        required: true
+        required: true,
+        lowercase: true
+
     },
     isOnline: {
         type: Boolean,

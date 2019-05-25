@@ -5,24 +5,28 @@ const locationSchema = require('./location')
 const prodFisicoSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
-        default: "wallacez1@hotmail.com",
-        required: true
+        default: "",
+        required: true,
+        lowercase: true
     },
     nomeProduto: {
         type: String,
         default: "",
-        required: true
+        required: true,
+        lowercase: true
     },
 
     isOnline: {
         type: Boolean,
         default: false,
-        required: true
+        required: true,
+        lowercase: true
     },
     tipoProduto: {
         type: String,
         default: "pf",
-        required: true
+        required: true,
+        lowercase: true
     },
     categoria: {
         type: String,
@@ -32,12 +36,14 @@ const prodFisicoSchema = mongoose.Schema({
     valorProduto: {
         type: Number,
         default: 0,
-        required: true
+        required: true,
+
     },
     dataCadastro: {
         type: Date,
         default: Date.now(),
         required: true
+
     },
     totalLikes: {
         type: Number,
@@ -53,7 +59,8 @@ const prodFisicoSchema = mongoose.Schema({
     },
     nomeEstabelecimento: {
         type: String,
-        required: true
+        required: true,
+        lowercase: true
     },
     loc: locationSchema,
 });
