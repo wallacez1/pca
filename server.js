@@ -15,7 +15,7 @@ app.use(logger('dev'));
 
 const dbConfig = require('./config/config')
 
-app.use((req, res, next)  => {
+app.use((req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Credentials", "true");
     res.header('Access-Control-Allow-Methods', 'GET', 'POST', 'DELETE', 'PUT');
@@ -23,18 +23,24 @@ app.use((req, res, next)  => {
     next();
 });
 
-app.use(express.json({limit: '50mb'}))
-app.use(express.urlencoded({extended:true, limit: '50mb'}));
+app.use(express.json({
+    limit: '50mb'
+}))
+app.use(express.urlencoded({
+    extended: true,
+    limit: '50mb'
+}));
 
 //Conexão com o banco
- mongoose.Promise = global.Promise;
- mongoose.connect(dbConfig.dbStringConexao, {useNewUrlParser:true})
+mongoose.Promise = global.Promise;
+mongoose.connect(dbConfig.dbStringConexao, {
+    useNewUrlParser: true
+})
 // mongoose.connect('mongodb://localhost/noderest', { useNewUrlParser: true });
 // mongoose.Promise = global.Promise;
 
-mongoose.connection.on('error', (err) => {		
-    console.log('db.error'
-    );
+mongoose.connection.on('error', (err) => {
+    console.log('db.error', err);
 });
 mongoose.connection.on('connected', () => {
     console.log('db.ready');
@@ -45,12 +51,13 @@ mongoose.connection.on('connected', () => {
 require('./controllers/authcontroller')(app);
 require('./controllers/loginController')(app);
 // const login = require('./routes/loginRoutes')
-// const posts = require('./routes/postRoutes')
 
-// app.use('/api',login)
-// app.use('/api',posts)
+const posts = require('./routes/postRoutes')
+const search = require('./routes/searchRoutes')
 
+app.use('/api', posts)
+app.use('/api', search)
 
-app.listen(PORT, () =>{
+app.listen(PORT, () => {
     console.log('running on port ' + PORT)
 })

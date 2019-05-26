@@ -1,0 +1,12 @@
+const express = require('express')
+const router = express.Router();
+const authmiddleware = require('../middlewares/auth');
+
+const searchCtrl = require("../controllers/searchController")
+
+
+router.get('/search/all', authmiddleware, searchCtrl.GetAll);
+router.get('/search/place', authmiddleware, searchCtrl.GetPlace);
+
+
+module.exports = router;

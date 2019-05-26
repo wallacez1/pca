@@ -14,8 +14,12 @@ const servicoSchema = mongoose.Schema({
         required: true,
         lowercase: true
     },
-
-    loc: locationSchema,
+    categoria: {
+        type: String,
+        default: "",
+        required: true,
+        lowercase: true
+    },
 
     tipoProduto: {
         type: String,
@@ -47,11 +51,19 @@ const servicoSchema = mongoose.Schema({
         type: String,
         default: 0
     },
-    Descricao: {
+    descricao: {
         type: String,
         default: "",
         lowercase: true
     },
+    loc: {
+        type: locationSchema,
+        required: true
+    }
 });
+
+servicoSchema.index({
+    'produtos.loc': '2dsphere'
+})
 
 module.exports = mongoose.model('servico', servicoSchema, 'produtos')

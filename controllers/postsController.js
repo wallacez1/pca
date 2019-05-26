@@ -27,22 +27,19 @@ module.exports = {
 
 
                     var produtoFisico = {
+                        emailUsuario: req.userEmail,
                         nomeProduto: req.body.payload.name,
                         categoria: req.body.payload.category,
                         valorProduto: req.body.payload.value,
                         nomeEstabelecimento: req.body.payload.place,
                         imagePath: req.body.payload.imagePath,
                         loc: {
-                            endereco: {
-                                rua: req.body.location.street,
-                                numero: req.body.location.house_number,
-                                estado: req.body.location.state,
-                                pais: req.body.location.country,
-                                cidade: req.body.location.city
-                            },
-                            geo: {
-                                coordinates: [req.body.location.lat, req.body.location.long]
-                            }
+                            rua: req.body.location.street,
+                            numero: req.body.location.house_number,
+                            estado: req.body.location.state,
+                            pais: req.body.location.country,
+                            cidade: req.body.location.city,
+                            coordinates: [req.body.location.long, req.body.location.lat]
                         }
                     }
 
@@ -83,6 +80,7 @@ module.exports = {
                 } else {
 
                     var produtoOnline = {
+                        emailUsuario: req.userEmail,
                         nomeProduto: req.body.payload.name,
                         categoria: req.body.payload.category,
                         valorProduto: req.body.payload.value,
@@ -116,7 +114,6 @@ module.exports = {
 
             const data = req.body;
 
-            console.log("bateu aqui no se")
 
             Joi.validate(data, ServicoJoiSchema, (err, value) => {
                 if (err) {
@@ -128,23 +125,25 @@ module.exports = {
                     });
                 } else {
                     var servico = {
+                        emailUsuario: req.userEmail,
                         nomeServico: req.body.payload.name,
                         categoria: req.body.payload.category,
-                        valorProduto: req.body.payload.value,
+                        valorServico: req.body.payload.value,
                         nomeEstabelecimento: req.body.payload.place,
                         descricao: req.body.payload.description,
+
                         loc: {
-                            endereco: {
-                                rua: req.body.location.street,
-                                numero: req.body.location.house_number,
-                                estado: req.body.location.state,
-                                pais: req.body.location.country,
-                                cidade: req.body.location.city
-                            },
-                            geo: {
-                                coordinates: [req.body.location.lat, req.body.location.long]
-                            }
+                            rua: req.body.location.street,
+                            numero: req.body.location.house_number,
+                            estado: req.body.location.state,
+                            pais: req.body.location.country,
+                            cidade: req.body.location.city,
+                            coordinates: [req.body.location.long, req.body.location.lat]
                         }
+
+
+
+
                     }
 
                     ServicoModel.create(servico).then(post => {
