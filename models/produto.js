@@ -9,7 +9,5 @@ const ProductSchema = new Schema({}, {
     }
 });
 
-ProductSchema.index({
-    'produtos.loc': '2dsphere'
-})
+
 module.exports = mongoose.model('produtos', ProductSchema, 'produtos')

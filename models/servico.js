@@ -57,13 +57,26 @@ const servicoSchema = mongoose.Schema({
         lowercase: true
     },
     loc: {
+        type: {
+            type: String,
+            default: "Point"
+        },
+        coordinates: {
+            type: [Number],
+
+        },
+
+    },
+    adress: {
         type: locationSchema,
         required: true
     }
 });
 
 servicoSchema.index({
-    'produtos.loc': '2dsphere'
+    loc: '2dsphere'
 })
+
+
 
 module.exports = mongoose.model('servico', servicoSchema, 'produtos')

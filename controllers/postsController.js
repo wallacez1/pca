@@ -34,12 +34,15 @@ module.exports = {
                         nomeEstabelecimento: req.body.payload.place,
                         imagePath: req.body.payload.imagePath,
                         loc: {
+                            coordinates: [req.body.location.long, req.body.location.lat]
+                        },
+                        adress: {
                             rua: req.body.location.street,
                             numero: req.body.location.house_number,
                             estado: req.body.location.state,
                             pais: req.body.location.country,
                             cidade: req.body.location.city,
-                            coordinates: [req.body.location.long, req.body.location.lat]
+
                         }
                     }
 
@@ -131,14 +134,16 @@ module.exports = {
                         valorServico: req.body.payload.value,
                         nomeEstabelecimento: req.body.payload.place,
                         descricao: req.body.payload.description,
-
                         loc: {
+                            coordinates: [req.body.location.long, req.body.location.lat]
+                        },
+                        adress: {
                             rua: req.body.location.street,
                             numero: req.body.location.house_number,
                             estado: req.body.location.state,
                             pais: req.body.location.country,
                             cidade: req.body.location.city,
-                            coordinates: [req.body.location.long, req.body.location.lat]
+
                         }
 
 

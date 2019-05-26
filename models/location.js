@@ -23,14 +23,7 @@ const locationSchema = mongoose.Schema({
         type: String,
         lowercase: true
     },
-    type: {
-        type: String,
-        default: "Point"
-    },
-    coordinates: {
-        type: [Number],
-        index: "2dsphere"
-    }
+
 
 });
 

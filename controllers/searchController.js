@@ -13,7 +13,7 @@ module.exports = {
     GetPlace(req, res) {
         const log = parseFloat(req.body.log)
         const lat = parseFloat(req.body.lat)
-        const distancemts = Number(req.body.distance)
+        const distancemts = parseInt(req.body.distance)
 
 
         console.log("long", log, "latitude", lat, "distancia",
@@ -22,15 +22,14 @@ module.exports = {
                 'loc': {
                     $nearSphere: {
                         $geometry: {
-                            type: 'Point',
+                            type: "Point",
                             coordinates: [log, lat]
                         },
                         $minDistance: 0,
                         $maxDistance: distancemts
                     }
-
-
                 }
+
             },
 
             (err, data) => {

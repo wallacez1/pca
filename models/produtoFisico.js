@@ -63,6 +63,18 @@ const prodFisicoSchema = mongoose.Schema({
         lowercase: true
     },
     loc: {
+        type: {
+            type: String,
+            default: "Point"
+        },
+        coordinates: {
+            type: [Number],
+            required: true
+        },
+
+
+    },
+    adress: {
         type: locationSchema,
         required: true
     }
@@ -70,7 +82,10 @@ const prodFisicoSchema = mongoose.Schema({
 });
 
 prodFisicoSchema.index({
-    'loc': '2dsphere'
+    loc: '2dsphere'
 })
+
+
+
 
 module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')
