@@ -129,7 +129,7 @@ module.exports = {
                 } else {
                     var servico = {
                         emailUsuario: req.userEmail,
-                        nomeServico: req.body.payload.name,
+                        nomeProduto: req.body.payload.name,
                         categoria: req.body.payload.category,
                         valorServico: req.body.payload.value,
                         nomeEstabelecimento: req.body.payload.place,

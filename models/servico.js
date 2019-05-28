@@ -8,7 +8,7 @@ const servicoSchema = mongoose.Schema({
         required: true,
         lowercase: true
     },
-    nomeServico: {
+    nomeProduto: {
         type: String,
         default: "",
         required: true,
@@ -72,6 +72,10 @@ const servicoSchema = mongoose.Schema({
         required: true
     }
 });
+
+servicoSchema.index({
+    nomeProduto: 'text'
+})
 
 servicoSchema.index({
     loc: '2dsphere'

@@ -15,9 +15,6 @@ module.exports = {
         const lat = parseFloat(req.body.lat)
         const distancemts = parseInt(req.body.distance)
 
-
-        console.log("long", log, "latitude", lat, "distancia",
-            distancemts)
         ProdutoModel.find({
                 'loc': {
                     $nearSphere: {
@@ -36,5 +33,24 @@ module.exports = {
                 if (err) throw err;
                 return res.send(data);
             })
+    },
+
+    AutoComplete(req, res) {
+
+        var keyWord = req.query.keyWord
+        console.log(keyWord)
+
+        ProdutoModel.find({
+                nomeProduto: {
+                    $regex: new RegExp(`^${keyWord}`, 'gi')
+                }
+            }, {
+                _id: 0,
+                _v: 0
+            },
+            (err, data) => {
+                if (err) throw err;
+                return res.send(data);
+            }).limit(10);
     }
 }

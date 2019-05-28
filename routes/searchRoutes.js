@@ -6,6 +6,7 @@ const searchCtrl = require("../controllers/searchController")
 
 
 router.get('/search/all', authmiddleware, searchCtrl.GetAll);
+router.get('/search/auto', searchCtrl.AutoComplete);
 router.get('/search/place', authmiddleware, searchCtrl.GetPlace);
 
 

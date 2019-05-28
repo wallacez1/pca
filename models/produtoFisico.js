@@ -85,6 +85,10 @@ prodFisicoSchema.index({
     loc: '2dsphere'
 })
 
+prodFisicoSchema.index({
+    loc: '2dsphere'
+})
+
 
 
 

@@ -60,4 +60,9 @@ const produtoOnlineSchema = mongoose.Schema({
 
 });
 
+
+produtoOnlineSchema.index({
+    nomeProduto: 'text'
+})
+
 module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')

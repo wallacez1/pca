@@ -1,134 +1,31 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hello Bulma!</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./style.css" id="href">
+    <title>Teste autocomplete</title>
 </head>
 
 <body>
-    <div class="columns is-multiline">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 m-auto">
+                <h3 class="text-center mb-3">
+                    Teste Auto Complete
+                </h3>
+                <div class="form-group">
+                    <input type="text" id="search" class="form-control form-control-lg">
+                </div>
+                <div id="match-list">
 
-        <div class="column is-half">
-            <a class="button" onclick="coordernadas()">endereço</a>
-            <p id="demo"></p>
+                </div>
+            </div>
         </div>
-
-
-        <div class="column is-half">
-            <form id="post" onsubmit="captureForm(event)" enctype='multipart/form-data'>
-                <section class="section">
-
-                    <div class="file">
-                        <label class="file-label">
-                            <input class="file-input" type="file" name="resume">
-                            <span class="file-cta">
-                                <span class="file-icon">
-                                    <i class="fas fa-upload"></i>
-                                </span>
-                                <span class="file-label">
-                                    insira uma imagem
-                                </span>
-                            </span>
-                        </label>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Nome produto</label>
-                        <div class="control">
-                            <input class="input" id="NomeProduto" type="text" placeholder="Text input">
-                        </div>
-                    </div>
-
-
-                    <div class="field">
-                        <label class="label">Valor</label>
-                        <div class="control">
-                            <input class="input" id="valor" type="number" placeholder="Text input">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <label class="label">Nome do estabelecimento</label>
-                        <div class="control">
-                            <input class="input" id="nomeEstabelecimento" type="text" placeholder="Text input">
-                        </div>
-                    </div>
-
-                    <div class="field">
-                        <div class="control">
-                            <label class="radio">
-                                <input type="radio" id="question" value="fisico" name="question">
-                                Produto Fisico
-                            </label>
-                            <label class="radio">
-                                <input type="radio" id="question" value="online" name="question">
-                                Produto online
-                            </label>
-                        </div>
-                    </div>
-
-                    <div class="field is-grouped">
-                        <div class="control">
-                            <button class="button is-link">Submit</button>
-                        </div>
-                    </div>
-                </section>
-        </div>
-        </form>
-
     </div>
-    <script>
-        var x = document.getElementById("demo")
-
-        function coordernadas() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(showPosition);
-            } else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-        }
-
-        function showPosition(position) {
-            x.innerHTML = "Latitude: " + position.coords.latitude +
-                "<br>Longitude: " + position.coords.longitude;
-        }
-
-        function captureForm(e) {
-            e.preventDefault();
-            url = "http://localhost:3000/api/post/add"
-            var nameValue = document.getElementById("NomeProduto").value;
-            var valor = document.getElementById("valor").value;
-            var nomeEstabelecimento = document.getElementById("nomeEstabelecimento").value;
-            var tipoDeProduto = document.querySelector('input[name="question"]:checked').value;
-            const files = document.querySelector('[type=file]').files;
-            const formData = new FormData();
-
-            // for (let i = 0; i < files.length; i++) {
-            //     let file = files[i]
-
-            //     formData.append('files[]', file)
-            // }
-
-           formData.append(valor,valor)
-           formData.append(nome,nameValue)
-           formData.append(nomeEstabelecimento,nomeEstabelecimento)
-           formData.append(tipo,tipoProduto)
-
-
-            fetch(url, {
-                method: 'POST',
-                body:formData
-            }).then(response => {
-                console.log(response)
-            })
-
-
-        }
-    </script>
-
+    <script src="index.js"></script>
 </body>
 
 </html>
