@@ -14,8 +14,14 @@ module.exports = {
         const log = parseFloat(req.body.log)
         const lat = parseFloat(req.body.lat)
         const distancemts = parseInt(req.body.distance)
+        const produto = req.body.name;
+        console.log(produto)
 
         ProdutoModel.find({
+                "nomeProduto": {
+                    '$regex': produto,
+                    '$options': 'i'
+                },
                 'loc': {
                     $nearSphere: {
                         $geometry: {
