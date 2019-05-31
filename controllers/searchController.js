@@ -1,12 +1,19 @@
 const ProdutoModel = require('../models/produto')
 
 module.exports = {
-    GetAll(req, res) {
 
-        var arr = [];
-        ProdutoModel.find({}, function (err, docs) {
-            return res.json(docs);
-        });
+
+    GetAll(req, res) {
+        const page = parseFloat(req.query.page)
+        ProdutoModel.paginate({}, {
+                page: page,
+                limit: 10
+            })
+            .then(response => {
+                res.send(response)
+            })
+            .catch();
+
     },
 
 

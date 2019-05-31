@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const locationSchema = require('./location')
+const mongoosePaginate = require('mongoose-paginate')
 
 const servicoSchema = mongoose.Schema({
     emailUsuario: {
@@ -81,6 +82,8 @@ servicoSchema.index({
     loc: '2dsphere'
 })
 
+
+servicoSchema.plugin(mongoosePaginate)
 
 
 module.exports = mongoose.model('servico', servicoSchema, 'produtos')

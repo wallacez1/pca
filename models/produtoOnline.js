@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+const mongoosePaginate = require('mongoose-paginate');
 
 
 
@@ -64,5 +64,5 @@ const produtoOnlineSchema = mongoose.Schema({
 produtoOnlineSchema.index({
     nomeProduto: 'text'
 })
-
+produtoOnlineSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')
