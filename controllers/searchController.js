@@ -1,18 +1,25 @@
 const ProdutoModel = require('../models/produto')
+const limit = 4;
 
 module.exports = {
 
-
     GetAll(req, res) {
-        const page = parseFloat(req.query.page)
-        ProdutoModel.paginate({}, {
-                page: page,
-                limit: 10
-            })
-            .then(response => {
-                res.send(response)
-            })
-            .catch();
+        const page = parseInt(req.query.page)
+        var query = {}
+        var type = req.query.type
+
+
+        if (type !== 'all') {
+            query["tipoProduto"] = type
+        }
+
+
+
+
+
+        ProdutoModel.find(query, function (err, docs) {
+            return res.json(docs);
+        }).skip((page * limit) - limit).limit(limit);
 
     },
 
@@ -22,7 +29,8 @@ module.exports = {
         const lat = parseFloat(req.body.lat)
         const distancemts = parseInt(req.body.distance)
         const produto = req.body.name;
-        console.log(produto)
+        const skip = parseInt(req.query.skip)
+
 
         ProdutoModel.find({
                 "nomeProduto": {
@@ -41,11 +49,10 @@ module.exports = {
                 }
 
             },
-
             (err, data) => {
                 if (err) throw err;
                 return res.send(data);
-            })
+            }).skip((page * limit) - limit).limit(limit);
     },
 
     AutoComplete(req, res) {

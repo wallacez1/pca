@@ -83,7 +83,6 @@ servicoSchema.index({
 })
 
 
-servicoSchema.plugin(mongoosePaginate)
 
 
 module.exports = mongoose.model('servico', servicoSchema, 'produtos')

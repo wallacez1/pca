@@ -89,7 +89,7 @@ prodFisicoSchema.index({
     loc: '2dsphere'
 })
 
-prodFisicoSchema.plugin(mongoosePaginate);
+
 
 
 module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')
