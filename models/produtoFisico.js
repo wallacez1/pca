@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 const locationSchema = require('./location')
-const mongoosePaginate = require('mongoose-paginate');
+const qualificacaoSchema = require('./qualificacao');
 
 const prodFisicoSchema = mongoose.Schema({
     emailUsuario: {
@@ -45,13 +45,9 @@ const prodFisicoSchema = mongoose.Schema({
         required: true
 
     },
-    totalLikes: {
-        type: Number,
-        default: 0
-    },
-    totalDeslikes: {
-        type: Number,
-        default: 0
+    qualificacao: {
+        type: qualificacaoSchema,
+        required: false
     },
     imagePath: {
         type: String,
@@ -88,8 +84,5 @@ prodFisicoSchema.index({
 prodFisicoSchema.index({
     loc: '2dsphere'
 })
-
-prodFisicoSchema.plugin(mongoosePaginate);
-
 
 module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')

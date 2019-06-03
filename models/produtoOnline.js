@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
-const mongoosePaginate = require('mongoose-paginate');
-
-
+const qualificacaoSchema = require('./qualificacao');
 
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
@@ -45,13 +43,9 @@ const produtoOnlineSchema = mongoose.Schema({
         default: Date.now(),
         required: true
     },
-    totalLikes: {
-        type: Number,
-        default: 0
-    },
-    totalDeslikes: {
-        type: Number,
-        default: 0
+    qualificacao: {
+        type: qualificacaoSchema,
+        required: false
     },
     url: {
         type: String,
@@ -64,5 +58,4 @@ const produtoOnlineSchema = mongoose.Schema({
 produtoOnlineSchema.index({
     nomeProduto: 'text'
 })
-produtoOnlineSchema.plugin(mongoosePaginate);
 module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')
