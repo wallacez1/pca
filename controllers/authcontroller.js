@@ -24,10 +24,11 @@ router.post('/login', async (req, res) => {
     try {
         
         // Verifica se o body esta vazio    
-        if (Object.keys(req.body).length === 0){
-        return res.status(400).send({ 
-            error: 'Body vazio!' 
-        });
+        if (Object.keys(req.body).length === 0) {
+            return res.status(400).send({ 
+                error: 'Body vazio!' 
+            });
+        }
 
         // Verificar se o email ja existe
         const {
