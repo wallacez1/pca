@@ -1,5 +1,5 @@
 const ProdutoModel = require('../models/produto')
-const limit = 4;
+const limit = 10;
 
 module.exports = {
 
@@ -29,7 +29,7 @@ module.exports = {
         const lat = parseFloat(req.body.lat)
         const distancemts = parseInt(req.body.distance)
         const produto = req.body.name;
-        const skip = parseInt(req.query.skip)
+        const page = parseInt(req.query.page)
 
 
         ProdutoModel.find({
