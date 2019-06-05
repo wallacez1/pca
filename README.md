@@ -12,4 +12,3 @@ Requerimentos: Ter node.js instalado
 
 4 - npm start para executar
 
-#teste

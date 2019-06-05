@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const locationSchema = require('./location')
-const mongoosePaginate = require('mongoose-paginate');
 
 const prodFisicoSchema = mongoose.Schema({
     emailUsuario: {
