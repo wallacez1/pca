@@ -8,6 +8,12 @@ const ACAO_LIKE = 1;
 const ACAO_DESLIKE = 0;
 const ACAO_NENHUMA = -1;
 
+const ACOES_QUALIFICACAO = [
+    ACAO_NENHUMA,
+    ACAO_DESLIKE,
+    ACAO_LIKE,
+];
+
 module.exports = {
 
 
@@ -76,15 +82,20 @@ module.exports = {
                     {$unwind: '$acoes'},
                     {$project: {user_id: '$acoes.user', user_acao: '$acoes.acao'}},
                     {$match: {"$acoes.user": user._id}},
-                    //{$match: {user_id: 'LeandroA'}},
                     {$group: {_id: "$user_acao"}}
                 ], (err, array) => {
-                    const {_id} = !array && array.length == 1 ? array[0] : {}; 
-                    const resultado = {resultado: ACAO_NENHUMA};
-                    if (_id == ACAO_LIKE || _id == ACAO_DESLIKE) {
-                        resultado.resultado = _id;
+
+                    const {_id} = array.length > 0 ? array[0] : {}; 
+                    const resposta = {resultado: ACAO_NENHUMA};
+
+                    //Verifica se o que vem do banco,
+                    //coincide com qualificações configuradas
+
+                    if (ACOES_QUALIFICACAO.includes(_id)) {
+                        resposta.resultado = _id;
                     }
-                    res.status(200).json(resultado);
+
+                    res.status(200).json(resposta);
                 });
             });
         });
@@ -108,23 +119,21 @@ module.exports = {
                 res.status(500).json({message: "Produto não encontrado: " + err});
                 return;
             }
-            produto =produto.toObject();
+            produto = produto.toObject();
             
             let id = produto.qualificacoes ? produto.qualificacoes : mongoose.Types.ObjectId();
-            console.log(id);
-            console.log(produto.qualificacoes);
-            qualificacaoModel.findByIdAndUpdate(id, {}, {upsert: true, new: true}, (err, qualificacao) => {
-                console.log("ERRR!!!!! " + err);
-                console.log("INSERIU!!!!! " + qualificacao);
-            });
-            // if (!produto.qualificacao) {
 
-            //     qualificacaoModel.create({acoes:[]}).then(qual => {
-            //         produto.qualificacao = qual;
-            //     });
-            // } else {
-            //     qualificacaoModel.findById(produto.qualificacao);
-            // }
+            qualificacaoModel.findByIdAndUpdate(id, {}, {upsert: true, new: true}, (err, qualificacao) => {
+                
+                qualificacaoModel.aggregate([
+                    {$match: {_id: id}},
+                    {$unwind: '$acoes'},
+                    {$project: {user_id: '$acoes.user', user_acao: '$acoes.acao'}},
+                    {$match: {"$acoes.user": user._id}},
+                    {$group: {_id: "$user_acao"}}
+                ], (err, array) => {
+                });
+            });
         });
         
     }
