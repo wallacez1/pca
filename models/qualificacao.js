@@ -15,6 +15,6 @@ const qualificacaoSchema = mongoose.Schema({
     }]
 });
 
-module.exports.model = mongoose.model('qualificacao', qualificacaoSchema);
+module.exports.schema = qualificacaoSchema;
 
-module.exports = qualificacaoSchema;
+module.exports = mongoose.model('qualificacao', qualificacaoSchema);

@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
-const qualificacaoSchema = require('../models/qualificacao');
-const userModel = require('../models/user');
-const qualificacaoModel = mongoose.model('qualificacoes', qualificacaoSchema);
+const qualificacaoModel = require('../models/qualificacao');
+const produtoModel = require('../models/produto');
 
 const API_ACAO_LIKE = 1;
-const API_ACAO_LIKE = 0;
+const API_ACAO_DESLIKE = 0;
 const API_ACAO_NENHUMA = -1;
 
 const API_RETORNO_ACAO_SUCESSO = "sucesso";
@@ -15,7 +14,7 @@ const API_RETORNO_ACAO_NEGADO = "negado";
 
 const ACOES_QUALIFICACAO = [
     API_ACAO_NENHUMA,
-    API_ACAO_LIKE,
+    API_ACAO_DESLIKE,
     API_ACAO_LIKE,
 ];
 
@@ -36,10 +35,10 @@ module.exports = {
 
                 let {_id, count} = array[index];
                 //LIKES
-                if (_id == 1) {
+                if (_id == API_ACAO_LIKE) {
                     retorno.likes = count;
                 //DESLIKES
-                } else if (_id == 0) {
+                } else if (_id == API_ACAO_DESLIKE) {
                     retorno.deslikes = count;
                 }
             }
@@ -91,8 +90,22 @@ module.exports = {
             res.status(400).json({message: "Ação não informada"});
             return;
         }
+
+        novaAcao = parseInt(novaAcao);
+
+        if (!ACOES_QUALIFICACAO.includes(novaAcao)) {
+            res.status(400).json({message: "Ação inválida"});
+            return;
+        }
             
-        let id = produto.qualificacoes || mongoose.Types.ObjectId();
+        let id = produto.qualificacoes;
+
+        //Caso um produto nao esteja apontando para
+        //um documento de qualificacao, vamos gerar
+        //um ID e atribuir a esse produto
+        if (!id) {
+            id = mongoose.Types.ObjectId();
+        }
 
         qualificacaoModel.findByIdAndUpdate(id, {}, {upsert: true, new: true}, (err, qualificacao) => {
             

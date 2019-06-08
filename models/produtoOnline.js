@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const qualificacaoSchema = require('./qualificacao');
+const qualificacaoSchema = require('./qualificacao').schema;
 
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
