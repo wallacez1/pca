@@ -1,17 +1,34 @@
 const express = require('express')
 const router = express.Router();
-const authmiddleware = require('../middlewares/auth');
+const authMiddleware = require('../middlewares/auth');
+const userMiddleware = require('../middlewares/user');
+const produtoMiddleware = require('../middlewares/produto');
 
 const qualifyCtrl = require("../controllers/qualifyController")
 
 
-// router.post('/qualify/update', authmiddleware, qualifyCtrl.update);
-// router.post('/qualify/info', authmiddleware, qualifyCtrl.info);
-// router.post('/qualify/action', authmiddleware, qualifyCtrl.action);
+// router.post('/qualify/update', authMiddleware, qualifyCtrl.update);
+// router.post('/qualify/info', authMiddleware, qualifyCtrl.info);
+// router.post('/qualify/action', authMiddleware, qualifyCtrl.action);
 
-router.get('/qualify/update', qualifyCtrl.update);
-router.get('/qualify/info', qualifyCtrl.info);
-router.post('/qualify/action', qualifyCtrl.action);
+router.get('/qualify/update', 
+    produtoMiddleware, 
+    qualifyCtrl.update
+);
+
+router.get('/qualify/info', 
+    authMiddleware, 
+    userMiddleware, 
+    produtoMiddleware, 
+    qualifyCtrl.info
+);
+
+router.post('/qualify/action', 
+    authMiddleware, 
+    userMiddleware, 
+    produtoMiddleware, 
+    qualifyCtrl.action
+);
 
 
 module.exports = router;
