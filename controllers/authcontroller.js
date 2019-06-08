@@ -15,18 +15,18 @@ const router = express.Router();
 // Gerador Token
 function generateToken(params = {}) {
     return jwt.sign(params, authConfig.secret, {
-        expiresIn: 1000000,
+        expiresIn: '24h',
     });
 }
 
 // Inserção de Usuario
 router.post('/login', async (req, res) => {
     try {
-        
+
         // Verifica se o body esta vazio    
         if (Object.keys(req.body).length === 0) {
-            return res.status(400).send({ 
-                error: 'Body vazio!' 
+            return res.status(400).send({
+                error: 'Body vazio!'
             });
         }
 
