@@ -75,27 +75,33 @@ router.post('/update', async (req, res) => {
 
     try {
 
-        const email = req.userId;
 
-        const user = await usuario.findOne({
-            email
+        const query = {
+            email: req.userId
+        };
+
+        console.log(req.userId)
+
+        const update = {
+            name: req.body.name,
+            is_first_login: req.body.is_first_login,
+            gender: req.body.gender,
+            birthday: req.body.birthday,
+        }
+
+        console.log(req.body.email)
+
+        usuario.findOneAndUpdate({
+            email: req.body.email
+        }, update, function (err, updated) {
+            if (err) {
+                return res.status(500).send(err);
+            } else {
+                return res.json({
+                    user: updated
+                });
+            }
         });
-
-        if (!user)
-            return res.status(400).send({
-                error: 'User not found'
-            });
-
-        user.name = req.body.name
-        user.email = req.body.email
-        user.is_first_login = req.body.is_first_login;
-        user.gender = req.body.gender;
-        user.birthday = req.body.birthday;
-
-        await user.save();
-
-        res.send();
-
     } catch (err) {
         console.error(err)
         res.status(400).send({
