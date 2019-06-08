@@ -1,20 +1,9 @@
 const mongoose = require('mongoose');
-const userSchema = require('./user');
+const userSchema = require('./user').schema;
 
-// const acaoQualificacaoSchema = mongoose.Schema({
-//     user: userSchema,
-//     acao: {
-//         type: Number,
-//         default: 0
-//     },        
-//     dataAcao: {
-//         type: Date,
-//         default: Date.now()
-//     }
-// });
 const qualificacaoSchema = mongoose.Schema({
     acoes: [{
-        user: String,
+        user: userSchema,
         acao: {
             type: Number,
             default: 0
@@ -26,6 +15,6 @@ const qualificacaoSchema = mongoose.Schema({
     }]
 });
 
-//module.exports = mongoose.model('qualificacao', qualificacaoSchema);
+module.exports.model = mongoose.model('qualificacao', qualificacaoSchema);
 
 module.exports = qualificacaoSchema;
