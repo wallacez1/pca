@@ -67,11 +67,11 @@ router.use(authmiddleware);
 // Atualizando usuario no sitema
 router.post('/update', async (req, res) => {
 
-    const {
-        is_first_login,
-        gender,
-        birthday
-    } = req.body;
+    // const {
+    //     is_first_login,
+    //     gender,
+    //     birthday
+    // } = req.body;
 
     try {
 
@@ -86,9 +86,11 @@ router.post('/update', async (req, res) => {
                 error: 'User not found'
             });
 
-        user.is_first_login = is_first_login;
-        user.gender = gender;
-        user.birthday = birthday;
+        user.name = req.body.name
+        user.email = req.body.email
+        user.is_first_login = req.body.is_first_login;
+        user.gender = req.body.gender;
+        user.birthday = req.body.birthday;
 
         await user.save();
 
