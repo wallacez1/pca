@@ -37,7 +37,6 @@ router.post('/login', async (req, res) => {
         if (await usuario.findOne({
                 email
             })) {
-            console.log("entrou");
             return res.send({
                 token: generateToken({
                     email: email

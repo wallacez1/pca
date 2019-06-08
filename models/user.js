@@ -14,16 +14,16 @@ const userSchema = new mongoose.Schema({
         type: String,
     },
     gender: {
-        type: String, 
-        uppercase:true, 
-        enum: ["M","F","O"]
+        type: String,
+        uppercase: true,
+        enum: ["M", "F", "O"]
     },
     birthday: {
-        type: String,
+        type: Date,
 
     },
     created_at: {
-        type: Date, 
+        type: Date,
         default: Date.now()
     },
     is_first_login: {
@@ -42,5 +42,4 @@ const userSchema = new mongoose.Schema({
 });
 
 const collection = 'user';
-module.exports =  mongoose.model(collection, userSchema);
-
+module.exports = mongoose.model(collection, userSchema);
