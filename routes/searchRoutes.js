@@ -7,7 +7,7 @@ const searchCtrl = require("../controllers/searchController")
 
 router.get('/search/all', searchCtrl.GetAll);
 router.get('/search/auto', searchCtrl.AutoComplete);
-router.get('/search/place', authmiddleware, searchCtrl.GetPlace);
+router.post('/search/place', authmiddleware, searchCtrl.GetPlace);
 
 
 module.exports = router;
