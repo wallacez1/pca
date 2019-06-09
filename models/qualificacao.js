@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
-const userSchema = require('./user').schema;
 
-const qualificacaoSchema = mongoose.Schema({
+const qualificacaoSchema = new mongoose.Schema({
     acoes: [{
-        user: userSchema,
+        user: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
+            require: true
+        },
         acao: {
             type: Number,
             default: 0
@@ -15,6 +18,4 @@ const qualificacaoSchema = mongoose.Schema({
     }]
 });
 
-module.exports.schema = qualificacaoSchema;
-
-module.exports = mongoose.model('qualificacao', qualificacaoSchema);
+module.exports = mongoose.model('qualificacoes', qualificacaoSchema);

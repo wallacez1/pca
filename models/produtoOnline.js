@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const qualificacaoSchema = require('./qualificacao').schema;
 
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
@@ -44,7 +43,8 @@ const produtoOnlineSchema = mongoose.Schema({
         required: true
     },
     qualificacao: {
-        type: qualificacaoSchema,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'qualificacoes',
         required: false
     },
     url: {

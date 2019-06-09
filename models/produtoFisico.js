@@ -1,6 +1,5 @@
 const mongoose = require('mongoose')
 const locationSchema = require('./location')
-const qualificacaoSchema = require('./qualificacao').schema;
 
 const prodFisicoSchema = mongoose.Schema({
     emailUsuario: {
@@ -46,7 +45,8 @@ const prodFisicoSchema = mongoose.Schema({
 
     },
     qualificacao: {
-        type: qualificacaoSchema,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'qualificacoes',
         required: false
     },
     imagePath: {
