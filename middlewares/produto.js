@@ -4,7 +4,7 @@ const produtoModel = require('../models/produto');
  * Consulta o produto de uma query
  */
 module.exports = (req, res, next) => {
-
+    
     let {produto} = req.query;
 
     if (!produto) {
@@ -12,7 +12,7 @@ module.exports = (req, res, next) => {
     }
 
     produtoModel.findById(produto, (err, produtoData) => {
-        if (err) {                
+        if (err || !produtoData) {                
             return res.status(500).json({message: "Produto não encontrado: " + err});
         }
     

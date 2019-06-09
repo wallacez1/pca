@@ -1,7 +1,7 @@
 const userModel = require('../models/user');
 
 /**
- * Consulta o produto de uma query
+ * Valida se o email do usuario está na base
  */
 module.exports = (req, res, next) => {
 
@@ -9,7 +9,8 @@ module.exports = (req, res, next) => {
         return res.status(500).json({message: 'Sem email na requisição'});
     } 
     userModel.findOne({email: req.userEmail}, (err, user) => {
-        if (err) {
+
+        if (err || !user) {
             return res.status(500).json({message: "Usuário não encontrado: " + err});
         }
         
