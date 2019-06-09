@@ -39,7 +39,7 @@ if (GITHUB_REPOSITORY && GITHUB_REPOSITORY_BRANCH) {
 module.exports = {
 
     index(req, res) {
-        res.status(200).json({api_versiaon: VERSION});
+        res.status(200).json({api_version: VERSION});
     }
 
 };
