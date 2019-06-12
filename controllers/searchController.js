@@ -17,7 +17,7 @@ module.exports = {
         ProdutoModel.find(query, function (err, docs) {
             return res.json(docs);
         }).sort({
-            dateCadastro: -1
+            "dataCadastro": -1
         }).skip((page * limit) - limit).limit(limit);
 
     },
@@ -52,7 +52,7 @@ module.exports = {
                 if (err) throw err;
                 return res.send(data);
             }).sort({
-            dateCadastro: -1
+            "dataCadastro": -1
         }).skip((page * limit) - limit).limit(limit);
     },
 
