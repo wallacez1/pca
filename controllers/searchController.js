@@ -16,9 +16,9 @@ module.exports = {
 
         ProdutoModel.find(query, function (err, docs) {
             return res.json(docs);
-        }).sort({
+        }).skip((page * limit) - limit).limit(limit).sort({
             "dataCadastro": -1
-        }).skip((page * limit) - limit).limit(limit);
+        });
 
     },
 
@@ -51,9 +51,9 @@ module.exports = {
             (err, data) => {
                 if (err) throw err;
                 return res.send(data);
-            }).sort({
+            }).skip((page * limit) - limit).limit(limit).sort({
             "dataCadastro": -1
-        }).skip((page * limit) - limit).limit(limit);
+        })
     },
 
     AutoComplete(req, res) {
