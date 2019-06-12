@@ -19,7 +19,9 @@ module.exports = {
 
         ProdutoModel.find(query, function (err, docs) {
             return res.json(docs);
-        }).sort('-date').skip((page * limit) - limit).limit(limit);
+        }).sort({
+            date: -1
+        }).skip((page * limit) - limit).limit(limit);
 
     },
 
@@ -52,7 +54,9 @@ module.exports = {
             (err, data) => {
                 if (err) throw err;
                 return res.send(data);
-            }).skip((page * limit) - limit).limit(limit);
+            }).sort({
+            date: -1
+        }).skip((page * limit) - limit).limit(limit);
     },
 
     AutoComplete(req, res) {
