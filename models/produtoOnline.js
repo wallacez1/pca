@@ -1,7 +1,5 @@
 const mongoose = require('mongoose')
 
-
-
 const produtoOnlineSchema = mongoose.Schema({
     emailUsuario: {
         type: String,
@@ -44,13 +42,10 @@ const produtoOnlineSchema = mongoose.Schema({
         default: Date.now(),
         required: true
     },
-    totalLikes: {
-        type: Number,
-        default: 0
-    },
-    totalDeslikes: {
-        type: Number,
-        default: 0
+    qualificacao: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'qualificacoes',
+        required: false
     },
     url: {
         type: String,
@@ -63,5 +58,4 @@ const produtoOnlineSchema = mongoose.Schema({
 produtoOnlineSchema.index({
     nomeProduto: 'text'
 })
-
 module.exports = mongoose.model('produtoOnline', produtoOnlineSchema, 'produtos')

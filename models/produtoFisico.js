@@ -44,13 +44,10 @@ const prodFisicoSchema = mongoose.Schema({
         required: true
 
     },
-    totalLikes: {
-        type: Number,
-        default: 0
-    },
-    totalDeslikes: {
-        type: Number,
-        default: 0
+    qualificacao: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'qualificacoes',
+        required: false
     },
     imagePath: {
         type: String,
@@ -87,8 +84,5 @@ prodFisicoSchema.index({
 prodFisicoSchema.index({
     loc: '2dsphere'
 })
-
-
-
 
 module.exports = mongoose.model('produtoFisico', prodFisicoSchema, 'produtos')

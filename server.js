@@ -54,9 +54,13 @@ require('./controllers/loginController')(app);
 
 const posts = require('./routes/postRoutes')
 const search = require('./routes/searchRoutes')
+const qualify = require('./routes/qualifyRoutes');
+const index = require('./routes/indexRoutes');
 
 app.use('/api', posts)
 app.use('/api', search)
+app.use('/api', qualify)
+app.use('/', index)
 
 app.listen(PORT, () => {
     console.log('running on port ' + PORT)

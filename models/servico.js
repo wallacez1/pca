@@ -39,13 +39,10 @@ const servicoSchema = mongoose.Schema({
         required: true,
 
     },
-    totalLikes: {
-        type: Number,
-        default: 0
-    },
-    totalDeslikes: {
-        type: Number,
-        default: 0
+    qualificacao: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'qualificacoes',
+        required: false
     },
     nomeEstabelecimento: {
         type: String,
@@ -80,8 +77,6 @@ servicoSchema.index({
 servicoSchema.index({
     loc: '2dsphere'
 })
-
-
 
 
 module.exports = mongoose.model('servico', servicoSchema, 'produtos')
