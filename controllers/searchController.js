@@ -19,7 +19,7 @@ module.exports = {
 
         ProdutoModel.find(query, function (err, docs) {
             return res.json(docs);
-        }).skip((page * limit) - limit).limit(limit);
+        }).sort('-date').skip((page * limit) - limit).limit(limit);
 
     },
 
